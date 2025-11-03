@@ -30,15 +30,76 @@ Process user input to modify composition:
 - Specify output format (JSON/XML)
 - Limit token usage for efficiency
 
+## Advanced Prompt Techniques
+
+### Chain-of-Thought Prompting
+For complex analysis tasks:
+"Let's think step by step:
+1. First, identify the key themes in these articles
+2. Next, analyze the sentiment and perspective
+3. Then, synthesize the main points
+4. Finally, compose the segment in [persona] style"
+
+### Few-Shot Learning Examples
+Include 2-3 examples of desired output format:
+```
+Example 1: [Input] → [Expected Output]
+Example 2: [Input] → [Expected Output]
+Now process: [Actual Input]
+```
+
+### Output Validation Prompts
+"Review the generated content and verify:
+- Accuracy of information
+- Consistency with persona
+- Appropriate tone and style
+- Factual correctness"
+
+## Model-Specific Considerations
+
+### For Gemma Models
+- Use Instruct format: `<start_of_turn>user\n{prompt}<end_of_turn>\n<start_of_turn>model\n`
+- Keep context window under 4096 tokens for optimal performance
+- Temperature: 0.7 for creative content, 0.3 for factual summaries
+- Top-p: 0.9 recommended for balanced outputs
+
+### For General GGUF Models
+- Use appropriate stop tokens: `</s>`, `[/INST]`, or model-specific markers
+- Monitor token usage to stay within context limits
+- Adjust batch size based on available RAM/VRAM
+
+## Prompt Safety and Validation
+
+### Input Sanitization
+- Remove potential injection attempts
+- Validate content length before processing
+- Check for malicious patterns
+- Log suspicious prompts for review
+
+### Output Quality Checks
+- Verify JSON/XML format if structured output requested
+- Check for incomplete responses
+- Validate against expected schema
+- Monitor for hallucinations or factual errors
+
 ---
 
 ## Checklist
 - [x] Prompts designed
+- [x] Prompt templates created
 - [ ] Prompt performance tested
+- [ ] Safety validation implemented
+- [ ] Model-specific optimizations applied
 
 ## Ledger
-| Prompt Type | Template | Performance Note |
-|-------------|----------|------------------|
-| Summary | "Summarize..." | Good accuracy |
-| RAG | "Retrieve..." | Needs tuning |
-| Compose
+| Prompt Type | Template | Performance Note | Last Updated |
+|-------------|----------|------------------|--------------|
+| Summary | "Summarize..." | Good accuracy | 2025-10-28 |
+| RAG | "Retrieve..." | Needs tuning | 2025-10-28 |
+| Compose | "You are [persona]..." | Excellent quality | 2025-10-28 |
+| Metadata | "Analyze this article..." | 85% accuracy | 2025-10-28 |
+| Chat Adjust | "Modify persona..." | In testing | 2025-10-28 |
+
+---
+
+*Document Version: 1.1 | Last Updated: 2025-10-28 | Review Frequency: Bi-weekly*
